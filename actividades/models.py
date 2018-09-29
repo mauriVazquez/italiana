@@ -13,5 +13,5 @@ class Actividad(models.Model):
     class Meta():
         verbose_name_plural = "Actividades"
 
-    def __unicode__(self):
+    def __str__(self):
         return self.nombre
