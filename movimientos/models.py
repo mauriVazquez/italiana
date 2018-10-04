@@ -30,6 +30,8 @@ class CierreCaja(models.Model):
     fecha = models.DateField(auto_now_add=True)
     total_efectivo = models.DecimalField(max_digits=8,decimal_places=2)
     total_tarjeta = models.DecimalField(max_digits=8,decimal_places=2)
+    recibo_desde = models.CharField(max_length=8, unique=True)
+    recibo_hasta = models.CharField(max_length=8, unique=True)
 
     def __str__(self):
         return "%s | $%d" %(self.fecha, self.total_efectivo+self.total_tarjeta)
