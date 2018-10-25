@@ -1,0 +1,162 @@
+{% load static %}
+<html lang="es">
+<head>
+    <link rel="stylesheet" href="{% static "css/recibo.css" %}">
+</head>
+
+<body>
+    <div id="botonera">
+        <button onClick="javascript:window.print();">Imprimir</button>
+    </div>
+
+    <div id="page1">
+
+        <div class="bordeRecibo">
+            <header>
+                
+                <!-- Lado Izquierdo -->
+                <div class="column left">
+                    <div class="container">
+                        <div class="row text-left">
+                            <img src="{% static "img/logo_empresa.png" %}" alt="logo" width="208" height="85">
+                        </div>
+                        <div class="row text-left negrita h3">Mi Empresa</div>
+                        <div class="row text-left h3">Direccion</div>
+                        <div class="row text-left h3">Telefono</div>
+                    </div>
+                </div>
+                
+                <!-- Lado Central -->
+                <div class="column center text-center"> <span id="tipoComprobante">X</span> 
+                    <br>
+                    <span id="leyendaTipoComprobante" class="preimpreso">DOCUMENTO<br>NO VALIDO<br>COMO<br>FACTURA</span> 
+                </div>
+                
+                <!-- Lado Derecho -->
+                <div class="column right">
+                    <div class="container">
+                        <div id="lblComprobante" class="row text-center negrita h1">RECIBO</div>
+                        <div id="lblNroCmp" class="row text-center negrita h2"><span class="preimpreso">Nro.</span> {{ recibo.num_recibo }}</div>
+                        <div class="row text-center h3">ORIGINAL</div>
+                        <div class="row text-center h3">&nbsp;</div>
+                        <div class="row text-left h3">FECHA <span class="pull-right">{{ recibo.fecha|date:"d/m/Y" }}</span></div>
+                        
+                    </div>
+                </div>
+            </header>
+            
+            <section>
+                <span class="preimpreso">Recibimos de</span> {{ recibo.cliente }}
+                <br>
+                <span class="preimpreso">la cantidad de </span><span id="importeEnLetras">QUINIENTOS CUARENTA Y CINTO MIL PESOS</span> 
+            </section>
+            
+            <section id="sectionMedioPago">
+                <span class="preimpreso">Mediante</span> 
+                <div class="row">
+                    <span>{{ recibo.forma_pago }}</span>
+                    <span class="pull-right negrita importeEnPesos">{{ recibo.monto }}</span>
+                </div>
+            </section>
+            
+            <section>
+                <span class="preimpreso">En concepto de</span>
+                {% for actividad in recibo.actividad.all %}
+                    <div class="row">
+                        <span>{{ actividad }}</span>
+                        <span name="a" class="pull-right negrita importeEnPesos">{{ actividad.precio }}</span>
+                    </div>
+
+                {% endfor %}
+                
+            </section>
+            
+            <footer>
+                
+                <section id="son"> <span class="preimpreso">SON:</span> 
+                    <output id="totalRecibo" class="negrita importeEnPesos">{{ recibo.monto }}</output> 
+                </section>
+                
+                <section id="firma">
+                    <div id="hr" class="pull-right">&nbsp;</div>
+                    <p class="text-right">Mi Empresa</p>
+                </section>
+                
+            </footer>
+        </div><!-- bordeRecibo -->
+
+        <div class="bordeRecibo" style="margin-top: 2px">
+            <header>
+                
+                <!-- Lado Izquierdo -->
+                <div class="column left">
+                    <div class="container">
+                        <div class="row text-left">
+                            <img src="{% static "img/logo_empresa.png" %}" alt="logo" width="208" height="85">
+                        </div>
+                        <div class="row text-left negrita h3">Mi Empresa</div>
+                        <div class="row text-left h3">Direccion</div>
+                        <div class="row text-left h3">Telefono</div>
+                    </div>
+                </div>
+                
+                <!-- Lado Central -->
+                <div class="column center text-center"> <span id="tipoComprobante">X</span> 
+                    <br>
+                    <span id="leyendaTipoComprobante" class="preimpreso">DOCUMENTO<br>NO VALIDO<br>COMO<br>FACTURA</span> 
+                </div>
+                
+                <!-- Lado Derecho -->
+                <div class="column right">
+                    <div class="container">
+                        <div id="lblComprobante" class="row text-center negrita h1">RECIBO</div>
+                        <div id="lblNroCmp" class="row text-center negrita h2"><span class="preimpreso">Nro.</span> {{ recibo.num_recibo }}</div>
+                        <div class="row text-center h3">DUPLICADO</div>
+                        <div class="row text-center h3">&nbsp;</div>
+                        <div class="row text-left h3">FECHA <span class="pull-right">{{ recibo.fecha|date:"d/m/Y" }}</span></div>
+                        
+                    </div>
+                </div>
+            </header>
+            
+            <section>
+                <span class="preimpreso">Recibimos de</span> {{ recibo.cliente }}
+                <br>
+                <span class="preimpreso">la cantidad de </span><span id="importeEnLetras">QUINIENTOS CUARENTA Y CINTO MIL PESOS</span> 
+            </section>
+            
+            <section id="sectionMedioPago">
+                <span class="preimpreso">Mediante</span> 
+                <div class="row">
+                    <span>{{ recibo.forma_pago }}</span>
+                    <span class="pull-right negrita importeEnPesos">{{ recibo.monto }}</span>
+                </div>
+            </section>
+            
+            <section>
+                <span class="preimpreso">En concepto de</span>
+                {% for actividad in recibo.actividad.all %}
+                    <div class="row">
+                        <span>{{ actividad }}</span>
+                        <span name="a" class="pull-right negrita importeEnPesos">{{ actividad.precio }}</span>
+                    </div>
+                {% endfor %}
+                
+            </section>
+            
+            <footer>
+                
+                <section id="son"> <span class="preimpreso">SON:</span> 
+                    <output id="totalRecibo" class="negrita importeEnPesos">{{ recibo.monto }}</output> 
+                </section>
+                
+                <section id="firma">
+                    <div id="hr" class="pull-right">&nbsp;</div>
+                    <p class="text-right">Mi Empresa</p>
+                </section>
+                
+            </footer>
+        </div><!-- bordeRecibo -->
+    </div><!-- Page1 -->
+</body>
+</html>

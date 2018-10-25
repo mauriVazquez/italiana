@@ -24,7 +24,8 @@ class Recibo(models.Model):
     cliente = models.ForeignKey(Cliente)
 
     def __str__(self):
-        return "%s | $%s | Numero de recibo: %s" %(self.cliente, self.monto, self.num_recibo)
+        return "%s | $%s | Numero de recibo: %s" % (self.cliente, self.monto, self.num_recibo)
+
 
 class CierreCaja(models.Model):
     fecha = models.DateField(auto_now_add=True)
@@ -34,5 +35,4 @@ class CierreCaja(models.Model):
     recibo_hasta = models.CharField(max_length=8, unique=True)
 
     def __str__(self):
-        return "%s | $%d" %(self.fecha, self.total_efectivo+self.total_tarjeta)
-
+        return "%s | $%d" % (self.fecha, self.total_efectivo + self.total_tarjeta)

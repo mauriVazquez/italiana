@@ -57,3 +57,11 @@ def get_caja(request):
         lista.append(dic)
 
     return JsonResponse(lista)
+
+
+def imprimir_recibo(request, pk):
+    recibo = Recibo.objects.get(pk=pk)
+    context = {
+        "recibo": recibo,
+    }
+    return render(request, "movimientos/imprimir_recibo.html", context)
