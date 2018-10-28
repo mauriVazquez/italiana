@@ -2,9 +2,12 @@
 <html lang="es">
 <head>
     <link rel="stylesheet" href="{% static "css/recibo.css" %}">
+    <script src="{% static "js/numerosaletras.js" %}"></script>
+
+
 </head>
 
-<body>
+<body onLoad = "numerosLetras()">
     <div id="botonera">
         <button onClick="javascript:window.print();">Imprimir</button>
     </div>
@@ -48,7 +51,7 @@
             <section>
                 <span class="preimpreso">Recibimos de</span> {{ recibo.cliente }}
                 <br>
-                <span class="preimpreso">la cantidad de </span><span id="importeEnLetras">QUINIENTOS CUARENTA Y CINTO MIL PESOS</span> 
+                <span class="preimpreso">la cantidad de </span><span id="importeEnLetras"></span> 
             </section>
             
             <section id="sectionMedioPago">
@@ -122,7 +125,7 @@
             <section>
                 <span class="preimpreso">Recibimos de</span> {{ recibo.cliente }}
                 <br>
-                <span class="preimpreso">la cantidad de </span><span id="importeEnLetras">QUINIENTOS CUARENTA Y CINTO MIL PESOS</span> 
+                <span class="preimpreso">la cantidad de </span><span id="importeEnLetrasD"></span> 
             </section>
             
             <section id="sectionMedioPago">
@@ -159,4 +162,25 @@
         </div><!-- bordeRecibo -->
     </div><!-- Page1 -->
 </body>
+
+<script type="text/javascript">
+        
+        function numerosLetras(){
+
+            var montoConPunto = '{{ recibo.monto }}';
+
+            montoConPunto = montoConPunto.replace(",",".");
+
+            var letras = NumeroALetras(montoConPunto);
+
+            document.getElementById("importeEnLetras").innerHTML = letras;
+            document.getElementById("importeEnLetrasD").innerHTML = letras;
+
+
+
+        }
+
+
+    </script>>
+
 </html>
