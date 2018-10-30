@@ -2,6 +2,9 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render
+
+import json
+
 from .models import Actividad
 from clientes.models import Cliente
 
@@ -15,7 +18,7 @@ def reporte_actividades(request):
         actividad_cantidad[actividad.nombre] = cant_clientes
 
     context = {
-        "actividad_cantidad": actividad_cantidad,
+        "actividad_cantidad": json.dumps(actividad_cantidad, ensure_ascii=False),
     }
 
     return render(request, "actividades/reporte_actividades.html", context)

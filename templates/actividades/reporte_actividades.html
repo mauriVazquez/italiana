@@ -1,52 +1,55 @@
 <html>
 <head>
     <title>Reporte de actividades</title>
-    <!--Load the AJAX API-->
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-
-      // Load the Visualization API and the corechart package.
-      google.charts.load('current', {'packages':['corechart']});
-
-      // Set a callback to run when the Google Visualization API is loaded.
-      google.charts.setOnLoadCallback(drawChart);
-
-      // Callback that creates and populates a data table,
-      // instantiates the pie chart, passes in the data and
-      // draws it.
-      String.prototype.replaceAll = function(search, replacement) {
-		    var target = this;
-		    return target.split(search).join(replacement);
-	  };
-
-      function drawChart() {
-
-      	var json = '{{actividad_cantidad}}';
-
-      	json = json.replaceAll("&#39;",'"');
-
-      	console.log(json);
-
-      	var parsed = JSON.parse(json);
-
-      	console.log(parsed);
-        // Create the data table.
-        var dataTableData = google.visualization.arrayToDataTable(parsed);
-
-        // Set chart options
-        var options = {'title':'How Much Pizza I Ate Last Night',
-                       'width':400,
-                       'height':300};
-
-        // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-        chart.draw(dataTableData, options);
-      }
-    </script>
+    <meta charset="utf-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
   </head>
 
   <body>
-    <!--Div that will hold the pie chart-->
-    <div id="chart_div"></div>
+    <div class="chart-container" style="position: relative; height:20vh; width:20vw">
+      <canvas id="myChart"></canvas>
+    </div>
+
+    <script type="text/javascript">
+    	let json = "{{ actividad_cantidad }}";
+
+      json = json.replace(/&quot;/g,'"');
+
+    	console.log(json);
+
+      let deportes = [];
+      let cantidad = [];
+
+    	parsed = JSON.parse(json, function (key, value) {
+        if (key) {
+          deportes.push(key);
+        }
+        if (value) {
+          cantidad.push(value);
+        }
+      });
+
+      let ctx = document.getElementById('myChart').getContext('2d');
+
+      let myPieChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: deportes,
+          datasets: [{
+              label: "My First dataset",
+              backgroundColor: [
+                'rgb(255, 99, 132)',
+                'rgba(54, 162, 235, 0.2)',
+              ],
+              borderColor: [
+                'rgb(255, 99, 132)',
+                'rgba(54, 162, 235, 0.2)',
+              ],
+              data: cantidad,
+          }]
+        },
+        options: {}
+      });
+    </script>
   </body>
 </html>
