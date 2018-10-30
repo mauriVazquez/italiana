@@ -18,4 +18,3 @@ class ActividadAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Actividad, ActividadAdmin)
-
