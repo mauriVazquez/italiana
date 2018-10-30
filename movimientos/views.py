@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from datetime import date, datetime, timedelta
+from datetime import datetime, timedelta
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.views.generic.edit import CreateView
 from django.http import JsonResponse
 
+from clientes.models import Cliente
 from .models import Recibo, CierreCaja
+
 
 def generar_caja():
 
@@ -59,9 +62,53 @@ def get_caja(request):
     return JsonResponse(lista)
 
 
+class ReciboCreate(CreateView):
+    model = Recibo
+    fields = ["forma_pago"]
+
+    def get_context_data(self, **kwargs):
+        context = super(CreateView, self).get_context_data(**kwargs)
+        client_id = self.kwargs["pk"]
+        cliente = Cliente.objects.get(pk=client_id)
+        context["title"] = "Recibo"
+        context["actividades"] = self.get_actividades(cliente)
+        context["cliente"] = cliente
+        return context
+
+    def get_actividades(self, cliente):
+        actividades = cliente.actividades.all()
+        return actividades
+
+    def form_valid(self, form):
+        actividades = self.request.POST.getlist("actividades[]", None)
+        cliente_id = self.request.POST.get("cliente")
+        monto = self.request.POST.get("monto")
+        forma_pago_id = self.request.POST.get("forma_pago")
+        num_recibo = Recibo.objects.all().latest('num_recibo').num_recibo + 1
+
+        recibo = Recibo()
+        recibo.num_recibo = num_recibo
+        recibo.monto = monto
+        recibo.cliente_id = cliente_id
+        recibo.forma_pago_id = forma_pago_id
+        recibo.save()
+
+        if actividades:
+            actividades = actividades[0].split(",")
+
+            for actividad in actividades:
+                recibo.actividad.add(actividad)
+
+        # instance = form.save(commit=True)
+
+        # return super(ReciboCreate, self).form_valid(form)
+        return redirect('/movimientos/imprimir_recibo/%s' % (str(recibo.pk)))
+
+
 def imprimir_recibo(request, pk):
     recibo = Recibo.objects.get(pk=pk)
     context = {
         "recibo": recibo,
     }
+
     return render(request, "movimientos/imprimir_recibo.html", context)

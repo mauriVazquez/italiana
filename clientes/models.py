@@ -3,6 +3,7 @@
 from django.db import models
 from actividades.models import Actividad
 
+
 class Cliente(models.Model):
     nombre = models.CharField(max_length=40, unique=True)
     email = models.CharField(max_length=50, null=True, blank=True)
@@ -23,7 +24,6 @@ class Telefono(models.Model):
     tipo = models.CharField(max_length=2, choices=TELEFONOS_CHOICES, default="MV")
     valor = models.CharField(max_length=40)
     cliente = models.ForeignKey(Cliente)
-
 
     def __str__(self):
         return '%s - %s' % (self.get_tipo_display(), self.valor)

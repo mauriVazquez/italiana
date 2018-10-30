@@ -1,0 +1,59 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+{% block extrahead %}
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+<form method="post">
+    {% csrf_token %}
+    <h1>{{ cliente }}</h1>
+    <input type="hidden" name="cliente" value="{{ cliente.id }}">
+
+    {{ form.as_p }}
+
+    <h2>Actividades a pagar:</h2>
+    {% for actividad in actividades %}
+        <input class="actividad" type="checkbox" id="{{ actividad.id }}" precio="{{ actividad.precio }}">
+        <label for="{{ actividad.id }}">{{ actividad }} - {{ actividad.precio }}</label>
+        <br>
+    {% endfor %}
+    <input type="hidden" name="actividades[]" id="actividades"/>
+
+    <label>Monto total:</label>
+    <input type="number" name="monto" id="monto" readonly="readonly" value="0">
+    <br>
+
+    <button id="generar_pago">Generar recibo</button>
+</form>
+
+<script type="text/javascript">
+    $(function() {
+        actividades = [];
+
+        $(".actividad").on("click", function() {
+            let precio = parseInt($(this).attr("precio"));
+            let total = parseInt($("#monto").val());
+
+            if ($(this).is(":checked")) {
+                $("#monto").val(total + precio);
+                actividades.push($(this).attr("id"));
+            } else {
+                let index = actividades.indexOf($(this).attr("id"));
+                if (index > -1) {
+                    $("#monto").val(total - precio);
+                    actividades.splice(index, 1);
+                }
+            }
+        });
+
+        $("#generar_pago").on("click", function() {
+            $("#actividades").val(actividades);
+            $("form").submit();
+        })
+    });
+</script>
+
+{% endblock %}
+
