@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView
 from django.http import JsonResponse
+from django.contrib import admin
 
 from clientes.models import Cliente
 from .models import Recibo, CierreCaja
@@ -67,12 +68,13 @@ class ReciboCreate(CreateView):
     fields = ["forma_pago"]
 
     def get_context_data(self, **kwargs):
-        context = super(CreateView, self).get_context_data(**kwargs)
+        context = super(ReciboCreate, self).get_context_data(**kwargs)
         client_id = self.kwargs["pk"]
         cliente = Cliente.objects.get(pk=client_id)
         context["title"] = "Recibo"
         context["actividades"] = self.get_actividades(cliente)
         context["cliente"] = cliente
+        context.update(admin.site.each_context(self.request))
         return context
 
     def get_actividades(self, cliente):

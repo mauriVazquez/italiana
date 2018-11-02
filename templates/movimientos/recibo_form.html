@@ -1,33 +1,70 @@
 {% extends "admin/base_site.html" %}
+{% load i18n admin_urls static admin_modify %}
+
 {% load static %}
 {% block extrahead %}
+{{ block.super }}
     <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
 {% endblock %}
 
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}"/>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <div class="breadcrumbs">
+        <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+        &rsaquo; <a href="/admin/clientes/cliente/">{% trans 'Clientes' %}</a>
+        &rsaquo; {% trans 'Cobrar' %}
+    </div>
+{% endblock %}
+
 {% block content %}
+{% block content_title %}
+{% endblock %}
+    <h1>Recibo de: {{ cliente }}</h1>
+<div id="content-main">
+    <form method="post">
+        {% csrf_token %}
+        <div>
+            <fieldset class="module aligned ">
+                <input type="hidden" name="cliente" value="{{ cliente.id }}">
 
-<form method="post">
-    {% csrf_token %}
-    <h1>{{ cliente }}</h1>
-    <input type="hidden" name="cliente" value="{{ cliente.id }}">
+                <div class="form-row">
+                    <div>
+                        {{ form }}
+                    </div>
+                </div>
+                <div class="form-row">
+                <h2>Actividades a pagar:</h2>
+                {% for actividad in actividades %}
+                    <div class="form-row">
+                        <div>
+                            <label class="required" for="{{ actividad.id }}">{{ actividad }} - {{ actividad.precio }}</label>
+                            <input class="vTextField actividad" type="checkbox" id="{{ actividad.id }}" precio="{{ actividad.precio }}">
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+                <input type="hidden" name="actividades[]" id="actividades"/>
 
-    {{ form.as_p }}
+                <div class="form-row">
+                    <div>
+                        <label>Monto total:</label>
+                        <input type="number" name="monto" id="monto" readonly="readonly" value="0">
+                    </div>
+                </div>
+                <br>
 
-    <h2>Actividades a pagar:</h2>
-    {% for actividad in actividades %}
-        <input class="actividad" type="checkbox" id="{{ actividad.id }}" precio="{{ actividad.precio }}">
-        <label for="{{ actividad.id }}">{{ actividad }} - {{ actividad.precio }}</label>
-        <br>
-    {% endfor %}
-    <input type="hidden" name="actividades[]" id="actividades"/>
+            </fieldset>
+            <div class="submit-row">
+                <input type="button" class="default" id="generar_pago" value="Generar recibo">
+            </div>
+        </div>
+    </form>
 
-    <label>Monto total:</label>
-    <input type="number" name="monto" id="monto" readonly="readonly" value="0">
-    <br>
-
-    <button id="generar_pago">Generar recibo</button>
-</form>
-
+</div>
 <script type="text/javascript">
     $(function() {
         actividades = [];
