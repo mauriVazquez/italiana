@@ -1,20 +1,37 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls static admin_modify %}
 {% load static %}
-<html>
-  <head>
+
+{% block extrahead %}
+    {{ block.super }}
     <title>{{ title }}</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+{% endblock %}
+
+{% block extrastyle %}
+    {{ block.super }}
     <link rel="stylesheet" type="text/css" href="{% static 'css/reportes.css' %}"></link>
-    <script src="{% static 'js/Chart.min.js' %}"></script>
-    <script src="{% static 'js/jquery.min.js' %}"></script>
-  </head>
+{% endblock %}
 
-  <body>
-    <h1>Reportes</h1>
-    <div class="chart-container">
-      <canvas id="myChart"></canvas>
+
+{% block breadcrumbs %}
+    <div class="breadcrumbs">
+        <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+        &rsaquo; <a href="/admin/actividades/actividad/">{% trans 'Actividades' %}</a>
+        &rsaquo; {% trans 'Reporte de actividades' %}
     </div>
+{% endblock %}
 
-    <script src="{% static 'js/reportes.js' %}"></script>
-  </body>
-</html>
+{% block coltype %}flex{% endblock %}
+{% block content %}
+    <div id="content-main">
+        <div class="module" id="changelist">
+            <div class="chart-container">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+
+        <script src="{% static 'js/reportes.js' %}"></script>
+    </div>
+{% endblock %}
