@@ -1,0 +1,24 @@
+Install Python 3.6+
+Install Django 1.11+
+Sample Project (Django Run Server)
+Install Wamp3+
+Install mod_wsgi (pip install mod_wsgi)
+Get Mod Wsgi path by mod_wsgi-express module-config
+Configura Apache (httpd.conf file)
+Restart Wamp
+
+
+
+
+#To install mod_wsgi
+set "MOD_WSGI_APACHE_ROOTDIR=C:\wamp64\bin\apache\apache2.4.35
+pip install mod_wsgi==4.5.20
+
+# Apache httpd.conf settings 
+LoadModule wsgi_module "c:/python36/lib/site-packages/mod_wsgi/server/mod_wsgi.cp36-win_amd64.pyd"
+WSGIScriptAlias / "E:/italiana/italiana/wsgi.py"
+WSGIPythonHome "c:/python36"
+WSGIPythonPath "E:/italiana"
+
+Alias /media/ E:/italiana/media/
+Alias /static/ E:/italiana/static/
