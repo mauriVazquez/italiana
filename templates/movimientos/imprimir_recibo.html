@@ -8,7 +8,9 @@
 <body onLoad="numerosLetras()">
     <div id="botonera">
         <button onClick="javascript:window.print();">Imprimir</button>
+        <button onClick="redirecciona_inicio();">Volver</button>
     </div>
+    
 
     <div id="page1">
 
@@ -19,11 +21,19 @@
                 <div class="column left">
                     <div class="container">
                         <div class="row text-left">
-                            <img src="{% static "img/logo_empresa.png" %}" alt="logo" width="208" height="85">
+                            {% if recibo.actividad.count == 1 %}
+                                
+                                {% for actividad in recibo.actividad.all %}
+                                <img src="{{ actividad.imagen.url }}" alt="logo" width="208" height="85">
+                                {% endfor %}
+
+                            {% else %}
+                                <img src="{% static "img/logo_empresa.jpg" %}" alt="logo" width="208" height="85">
+                            {% endif %}
                         </div>
-                        <div class="row text-left negrita h3">Empresa</div>
-                        <div class="row text-left h3">Direccion</div>
-                        <div class="row text-left h3">Telefono</div>
+                        <div class="row text-left negrita h3">Asoc. Italiana XX De Septiembre</div>
+                        <div class="row text-left h3">Calle 20 Nº 654</div>
+                        <div class="row text-left h3">Tel. 421776</div>
                     </div>
                 </div>
 
@@ -93,11 +103,19 @@
                 <div class="column left">
                     <div class="container">
                         <div class="row text-left">
-                            <img src="{% static "img/logo_empresa.png" %}" alt="logo" width="208" height="85">
+                            {% if recibo.actividad.count == 1 %}
+                                
+                                {% for actividad in recibo.actividad.all %}
+                                <img src="{{ actividad.imagen.url }}" alt="logo" width="208" height="85">
+                                {% endfor %}
+                                
+                            {% else %}
+                                <img src="{% static "img/logo_empresa.jpg" %}" alt="logo" width="208" height="85">
+                            {% endif %}
                         </div>
-                        <div class="row text-left negrita h3">Empresa</div>
-                        <div class="row text-left h3">Direccion</div>
-                        <div class="row text-left h3">Telefono</div>
+                        <div class="row text-left negrita h3">Asoc. Italiana XX De Septiembre</div>
+                        <div class="row text-left h3">Calle 20 Nº 654</div>
+                        <div class="row text-left h3">Tel. 421776</div>
                     </div>
                 </div>
 
@@ -169,6 +187,10 @@ function numerosLetras() {
 
     document.getElementById("importeEnLetras").innerHTML = letras;
     document.getElementById("importeEnLetrasD").innerHTML = letras;
+}
+
+function redirecciona_inicio() {
+    location.href="/admin/clientes/cliente/";
 }
 
 </script>

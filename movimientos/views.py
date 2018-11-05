@@ -12,7 +12,6 @@ from .models import Recibo, CierreCaja
 
 
 def generar_caja():
-
     caja = CierreCaja()
     ultimo_cierre = CierreCaja.objects.all().last()
 
