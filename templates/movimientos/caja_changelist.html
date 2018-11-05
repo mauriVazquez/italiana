@@ -1,0 +1,16 @@
+{% extends 'admin/change_list.html' %}
+
+
+{% block object-tools %}
+    <ul class="object-tools">
+        <li>
+            <a href="generar_caja/" class="addlink">Generar caja</a>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    {% block content_title %}{% endblock %}
+    <h1>Lista de cajas diarias</h1>
+    {{ block.super }}
+{% endblock %}

@@ -27,5 +27,4 @@ class ClienteAdmin(admin.ModelAdmin):
     cobrar.short_description = "Cobros"
 
 
-admin.site.register(Telefono)
 admin.site.register(Cliente, ClienteAdmin)

@@ -4,14 +4,14 @@ from datetime import datetime, timedelta
 
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from django.contrib import admin
 
 from clientes.models import Cliente
 from .models import Recibo, CierreCaja
 
 
-def generar_caja():
+def generar_caja(request):
     caja = CierreCaja()
     ultimo_cierre = CierreCaja.objects.all().last()
 
@@ -33,6 +33,8 @@ def generar_caja():
     caja.total_tarjeta = total_tarjeta
 
     caja.save()
+
+    return HttpResponseRedirect("../")
 
 
 def caja(request):
