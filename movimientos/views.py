@@ -87,7 +87,10 @@ class ReciboCreate(CreateView):
         cliente_id = self.request.POST.get("cliente")
         monto = self.request.POST.get("monto")
         forma_pago_id = self.request.POST.get("forma_pago")
-        num_recibo = Recibo.objects.all().latest('num_recibo').num_recibo + 1
+        try:
+            num_recibo = Recibo.objects.all().latest('num_recibo').num_recibo + 1
+        except Recibo.DoesNotExist:
+            num_recibo = 1
 
         recibo = Recibo()
         recibo.num_recibo = num_recibo

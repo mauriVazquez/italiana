@@ -15,6 +15,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='actividad',
             name='imagen',
-            field=models.ImageField(null=True, upload_to='logosActividades/'),
+            field=models.ImageField(upload_to="logos"),
         ),
     ]
