@@ -29,8 +29,8 @@ class Recibo(models.Model):
 
 class CierreCaja(models.Model):
     fecha = models.DateField(auto_now_add=True)
-    total_efectivo = models.DecimalField(max_digits=8,decimal_places=2)
-    total_tarjeta = models.DecimalField(max_digits=8,decimal_places=2)
+    total_efectivo = models.DecimalField(max_digits=8, decimal_places=2)
+    total_tarjeta = models.DecimalField(max_digits=8, decimal_places=2)
     recibo_desde = models.CharField(max_length=8, unique=True)
     recibo_hasta = models.CharField(max_length=8, unique=True)
 

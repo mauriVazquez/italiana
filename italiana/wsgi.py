@@ -1,22 +1,17 @@
-activate_this = 'C:/Users/franco/envs/italiana/Scripts/activate_this.py'
+"""
+WSGI config for italiana project.
 
-# execfile(activate_this, dict(__file__=activate_this))
+It exposes the WSGI callable as a module-level variable named ``application``.
 
-exec(open(activate_this).read(),dict(__file__=activate_this))
+For more information on this file, see
+https://docs.djangoproject.com/en/1.8/howto/deployment/wsgi/
+"""
 
 import os
-import sys
-import site
-
-# Add the site-packages of the chosen virtualenv to work with
-site.addsitedir('C:/Users/franco/Envs/italiana/Lib/site-packages')
-
-# Add the app's directory to the PYTHONPATH
-sys.path.append('C:/wamp64/www/italiana')
-sys.path.append('C:/wamp64/www/italiana/italiana')
-os.environ['DJANGO_SETTINGS_MODULE'] = 'italiana.settings'
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "italiana.settings")
 
 from django.core.wsgi import get_wsgi_application
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "italiana.settings")
+# os.environ["DJANGO_SETTINGS_MODULE"] = "italiana.settings"  # para usar en un solo demon de Apache
 
 application = get_wsgi_application()

@@ -8,6 +8,7 @@ from django.conf.urls import url
 from .models import Recibo, FormaPago, CierreCaja
 from .views import generar_caja
 
+
 class ReciboAdmin(admin.ModelAdmin):
     fields = ('num_recibo', 'forma_pago', 'cliente', 'actividad')
     list_display = ["num_recibo", "cliente", "fecha", "monto"]
@@ -45,7 +46,7 @@ class CierreCajaAdmin(admin.ModelAdmin):
         return False
 
     def get_urls(self):
-        urls = super().get_urls()
+        urls = super(CierreCajaAdmin, self).get_urls()
         my_urls = [
             url(r'^generar_caja/', generar_caja),
         ]
