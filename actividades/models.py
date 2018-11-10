@@ -15,4 +15,4 @@ class Actividad(models.Model):
         verbose_name_plural = "Actividades"
 
     def __str__(self):
-        return self.nombre
+        return self.nombre.encode('utf8')

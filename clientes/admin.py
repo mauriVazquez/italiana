@@ -13,6 +13,7 @@ class TelefonoInline(admin.TabularInline):
 class ClienteAdmin(admin.ModelAdmin):
     fields = ("nombre", "email", "tutor", "actividades")
     list_display = ["nombre", "cobrar"]
+    search_fields = ['nombre']
     inlines = [
         TelefonoInline,
     ]

@@ -11,7 +11,7 @@ class FormaPago(models.Model):
     tipo = models.CharField(max_length=40, unique=True)
 
     def __str__(self):
-        return self.tipo
+        return self.tipo.encode('utf8')
 
 
 class Recibo(models.Model):

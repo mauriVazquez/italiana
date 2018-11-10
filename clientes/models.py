@@ -13,7 +13,7 @@ class Cliente(models.Model):
     es_socio = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.nombre
+        return self.nombre.encode('utf8')
 
 
 class Telefono(models.Model):
