@@ -39,11 +39,11 @@ def get_deudores(request, pk):
     hoy = datetime.today()
     recibos_mes_actual = Recibo.objects.filter(fecha__month=hoy.month, actividad__pk=actividad.pk)
 
-    #obtengo clientes anotados a la actividad
+    # obtengo clientes anotados a la actividad
     clientes_de_actividad = Cliente.objects.filter(actividades__pk=actividad.pk)
 
-    #creo la lista de deudores y las relleno con los clientes
-    #que no aparecen dentro de los recibos del ultimo mes
+    # creo la lista de deudores y las relleno con los clientes
+    # que no aparecen dentro de los recibos del ultimo mes
     deudores = []
 
     for cliente in clientes_de_actividad:
